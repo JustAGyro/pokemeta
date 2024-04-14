@@ -1,9 +1,11 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "User" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "email" TEXT NOT NULL,
+    "name" TEXT,
+    "password" TEXT NOT NULL
+);
 
-  - You are about to drop the column `hashed_password` on the `User` table. All the data in the column will be lost.
-
-*/
 -- CreateTable
 CREATE TABLE "Team" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -62,18 +64,5 @@ CREATE TABLE "Party" (
     CONSTRAINT "Party_partyPokemonId_fkey" FOREIGN KEY ("partyPokemonId") REFERENCES "Pokemon" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- RedefineTables
-PRAGMA foreign_keys=OFF;
-CREATE TABLE "new_User" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "email" TEXT NOT NULL,
-    "name" TEXT,
-    "hashedPassword" TEXT
-);
-INSERT INTO "new_User" ("email", "id", "name") SELECT "email", "id", "name" FROM "User";
-DROP TABLE "User";
-ALTER TABLE "new_User" RENAME TO "User";
+-- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-CREATE UNIQUE INDEX "User_hashedPassword_key" ON "User"("hashedPassword");
-PRAGMA foreign_key_check;
-PRAGMA foreign_keys=ON;
