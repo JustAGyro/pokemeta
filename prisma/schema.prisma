@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,7 +8,67 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id              Int     @id @default(autoincrement())
+  email           String  @unique
+  name            String?
+  hashedPassword String? @unique
+  ownedTeams Team[]
+  ownedPokemon Pokemon[]
+}
+
+model Team {
+  id Int @id @default(autoincrement())
+  teamName String?
+  teamSummary String?
+  teamOwner User @relation(fields: [teamOwnerId], references: [id])
+  teamOwnerId Int
+  partyPokemon [Party]
+}
+
+model Pokemon {
+  id Int @id @default(autoincrement())
+  pokeDex Int
+  name String?
+  nickName String?
+  gender String?
+  shiny Boolean @default(false)
+  typeOne String?
+  typeTwo String?
+  teraType String?
+  item String?
+  ability String?
+  nature String?
+  moveOne String?
+  moveTwo String?
+  moveThree String?
+  moveFour String?
+  baseHp Int @default(1)
+  baseAtk Int @default(1)
+  baseDef Int @default(1)
+  baseSpAtk Int @default(1)
+  baseSpDef Int @default(1)
+  baseSpeed Int @default(1)
+  evHp Int @default(0)
+  evAtk Int @default(0)
+  evDef Int @default(0)
+  evSpAtk Int @default(0)
+  evSpDef Int @default(0)
+  evSpeed Int @default(0)
+  ivHp Int @default(1)
+  ivAtk Int @default(1)
+  ivDef Int @default(1)
+  ivSpAtk Int @default(1)
+  ivSpDef Int @default(1)
+  ivSpeed Int @default(1)
+  pokemonOwner User @relationship(fields: [pokemonOwnerId], references:[id])
+  pokemonOwnerId Int
+  parties [Party]
+}
+
+model Party {
+  id Int @id @default(autoincrement())
+  partyTeam Team @relationship(fields: [partyTeamId], references[id])
+  partyTeamId Int
+  partyPokemon Pokemon @relationship(fields: [partyPokemonId], references[id])
+  partyPokemonId Int
 }
