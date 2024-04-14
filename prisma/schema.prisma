@@ -22,7 +22,7 @@ model Team {
   teamSummary String?
   teamOwner User @relation(fields: [teamOwnerId], references: [id])
   teamOwnerId Int
-  partyPokemon [Party]
+  partyPokemon Party[]
 }
 
 model Pokemon {
@@ -60,15 +60,16 @@ model Pokemon {
   ivSpAtk Int @default(1)
   ivSpDef Int @default(1)
   ivSpeed Int @default(1)
-  pokemonOwner User @relationship(fields: [pokemonOwnerId], references:[id])
+  pokemonOwner User @relation(fields: [pokemonOwnerId], references:[id])
   pokemonOwnerId Int
-  parties [Party]
+  parties Party[]
 }
 
 model Party {
   id Int @id @default(autoincrement())
-  partyTeam Team @relationship(fields: [partyTeamId], references[id])
+  partyTeam Team @relation(fields: [partyTeamId], references: [id])
   partyTeamId Int
-  partyPokemon Pokemon @relationship(fields: [partyPokemonId], references[id])
+  partyPokemon Pokemon @relation(fields: [partyPokemonId], references: [id])
   partyPokemonId Int
+
 }
