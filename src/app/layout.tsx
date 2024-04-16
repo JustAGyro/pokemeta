@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'PokeMeta',
-  description: 'Show off your PokePower! Rawr',
+  description: 'Show off your PokePower!',
 };
 
 export default function RootLayout({
